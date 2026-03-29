@@ -42,9 +42,12 @@ export const workspaceService = {
       color?: string;
     },
   ) => {
+    if (!data || Object.keys(data).length === 0) {
+      throw new Error("workspaceService.update requires at least one field");
+    }
+
     // Send PUT request with updated fields
     const response = await api.put(`/api/workspaces/${id}`, data);
-
     // Return updated workspace
     return response.data;
   },
