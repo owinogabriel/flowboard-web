@@ -20,12 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
-          <AuthProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <QueryProvider>
             {children}
             <Toaster />
-          </AuthProvider>
-        </QueryProvider>
+          </QueryProvider>
+        </ThemeProvider>
+      </body>
+    </html>
       </body>
     </html>
   )
