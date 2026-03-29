@@ -1,65 +1,128 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, Zap, Users, BarChart3 } from "lucide-react";
 
-export default function Home() {
+const features = [
+  {
+    icon: <Zap className="h-6 w-6 text-yellow-500" />,
+    title: "Kanban Boards",
+    description:
+      "Visualize your workflow and move tasks between columns with ease",
+  },
+  {
+    icon: <Users className="h-6 w-6 text-blue-500" />,
+    title: "Team Collaboration",
+    description:
+      "Invite team members, assign tasks and track who is doing what",
+  },
+  {
+    icon: <BarChart3 className="h-6 w-6 text-green-500" />,
+    title: "Project Tracking",
+    description:
+      "Set deadlines, priorities and track progress across all projects",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-white flex flex-col">
+      {/* Navbar */}
+      <nav className="border-b bg-white sticky top-0 z-10 px-6 py-4 flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-sm">F</span>
+          </div>
+          <span className="text-xl font-bold text-slate-900">Flowboard</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link href="/login">
+            <Button variant="ghost" size="sm">
+              Sign In
+            </Button>
+          </Link>
+          <Link href="/register">
+            <Button size="sm">Get Started Free</Button>
+          </Link>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-24 bg-gradient-to-b from-slate-50 to-white">
+        <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-sm px-3 py-1 rounded-full mb-6">
+          <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+          Free to get started
+        </div>
+
+        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6 max-w-3xl leading-tight">
+          Manage projects with your team effortlessly
+        </h1>
+
+        <p className="text-xl text-slate-500 mb-10 max-w-2xl">
+          Flowboard helps teams organize work, track progress and ship faster.
+          Kanban boards, task assignments and team collaboration in one place.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link href="/register">
+            <Button size="lg" className="px-8">
+              Start for free
+            </Button>
+          </Link>
+          <Link href="/login">
+            <Button size="lg" variant="outline" className="px-8">
+              Sign in
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-24 px-6 bg-slate-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-slate-900 text-center mb-4">
+            Everything your team needs
+          </h2>
+          <p className="text-slate-500 text-center mb-12 max-w-xl mx-auto">
+            Simple and powerful tools to keep your team aligned and productive
           </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, i) => (
+              <div
+                key={i}
+                className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm"
+              >
+                <div className="mb-4">{feature.icon}</div>
+                <h3 className="font-semibold text-slate-900 mb-2">
+                  {feature.title}
+                </h3>
+                <p className="text-slate-500 text-sm">{feature.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 px-6 bg-slate-900 text-center">
+        <h2 className="text-3xl font-bold text-white mb-4">
+          Ready to get organized?
+        </h2>
+        <p className="text-slate-400 mb-8 max-w-md mx-auto">
+          Join teams already using Flowboard to ship projects faster
+        </p>
+        <Link href="/register">
+          <Button size="lg" variant="secondary" className="px-8">
+            Create free account
+          </Button>
+        </Link>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t py-6 px-6 flex justify-between items-center text-sm text-slate-500">
+        <span>© 2026 Flowboard</span>
+        <span>Built with ❤️</span>
+      </footer>
     </div>
   );
 }
