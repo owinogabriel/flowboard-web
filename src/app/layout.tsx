@@ -1,28 +1,32 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import { Inter } from "next/font/google";
-import QueryProvider from "@/providers/QueryProvider";
-import { Toaster } from "@/components/ui/sonner";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import QueryProvider from '@/providers/QueryProvider'
+import { AuthProvider } from '@/context/AuthContext'
+import { Toaster } from '@/components/ui/sonner'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
+
 export const metadata: Metadata = {
-  title: "Flowboard - Project Management",
-  description: "Manage your projects and tasks efficiently",
-};
+  title: 'Flowboard - Project Management',
+  description: 'Manage your projects and tasks efficiently'
+}
 
 export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  children
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          {children}
-          <Toaster />
+          <AuthProvider>
+            {children}
+            <Toaster />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>
-  );
+  )
 }
