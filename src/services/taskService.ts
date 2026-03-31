@@ -24,16 +24,16 @@ export const taskService = {
       assigneeId?: number;
     },
   ) => {
-    const response = await api.post(`/api/tasks/project${projectId}`, data);
+    const response = await api.post(`/api/tasks/project/${projectId}`, data);
     return response.data;
   },
   // Update an existing task
   update: async (
     id: number,
     data: {
-      title: string;
+      title?: string;
       description?: string;
-      priority: string;
+      priority?: string;
       status?: string;
       dueDate?: string;
       assigneeId?: number;
