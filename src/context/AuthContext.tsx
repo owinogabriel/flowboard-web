@@ -32,19 +32,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
+    // Restore backend session immediately, don't wait for Firebase
+    const savedToken = localStorage.getItem("token");
+    const savedUser = localStorage.getItem("user");
+    if (savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
+      // Re-sync cookie in case it expired
+      document.cookie = `token=${savedToken}; path=/; SameSite=Lax; max-age=${60 * 60 * 24 * 7}`;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         setFirebaseUser(firebaseUser);
-
-        const savedToken = localStorage.getItem("token");
-        const savedUser = localStorage.getItem("user");
-
-        if (savedToken && savedUser) {
-          setToken(savedToken);
-          setUser(JSON.parse(savedUser));
-        }
       }
-
       setIsLoading(false);
     });
 
@@ -56,6 +57,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setToken(backendToken);
     localStorage.setItem("token", backendToken);
     localStorage.setItem("user", JSON.stringify(backendUser));
+
+    // ADD THIS — middleware can only read cookies
+    document.cookie = `token=${backendToken}; path=/; SameSite=Lax; max-age=${60 * 60 * 24 * 7}`;
   };
 
   const logout = async () => {
@@ -63,6 +67,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     setToken(null);
     setFirebaseUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // ADD THIS
+    document.cookie = "token=; path=/; max-age=0";
     router.push("/login");
   };
 

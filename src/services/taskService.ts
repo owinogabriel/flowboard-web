@@ -31,9 +31,9 @@ export const taskService = {
   update: async (
     id: number,
     data: {
-      title: string;
+      title?: string;
       description?: string;
-      priority: string;
+      priority?: string;
       status?: string;
       dueDate?: string;
       assigneeId?: number;
